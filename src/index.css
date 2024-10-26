@@ -13,3 +13,45 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+@layer utilities {
+    .flex-center {
+        @apply flex items-center justify-center
+    }
+
+    .common-padding {
+        @apply sm:py-32 py-20 sm:px-10 px-5
+    }
+
+    .heading-1 {
+        @apply text-[56px] font-bold leading-[72px] tracking-normal
+    }
+
+    .heading-2 {
+        @apply text-5xl font-bold leading-[60px] tracking-normal
+    }
+
+    .heading-3 {
+        @apply text-[40px] font-bold leading-[50px] tracking-normal
+    }
+
+    .heading-4 {
+        @apply text-[32px] font-semibold leading-10 tracking-normal
+    }
+
+    .heading-5 {
+        @apply text-2xl font-semibold leading-8 tracking-normal
+    }
+
+    .paragraph-16 {
+        @apply text-base leading-6 tracking-normal
+    }
+
+    .paragraph-14 {
+        @apply text-[14px] leading-5 tracking-normal
+    }
+
+    .paragraph-12 {
+        @apply text-xs leading-4 tracking-normal
+    }
+}
