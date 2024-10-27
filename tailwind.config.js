@@ -3,6 +3,9 @@ export default {
     content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
     theme: {
         extend: {
+            backgroundImage: {
+                "bg-gradient-to-mb": "linear-gradient(156deg,  var(--tw-gradient-stops))",
+            },
             colors: {
                 primary: {
                     DEFAULT: "#2ED573",

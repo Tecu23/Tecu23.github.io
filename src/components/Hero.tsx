@@ -1,7 +1,9 @@
+import Snake from "./Snake";
+
 const Hero = () => {
     return (
-        <div className="container mx-auto max-w-7xl common-padding flex-center gap-6">
-            <div className="w-full flex flex-col items-start justify-center">
+        <div className="z-20 relative container mx-auto max-w-7xl common-padding flex-center gap-6">
+            <div className="w-full flex flex-col items-start justify-center flex-grow flex-shrink flex-auto">
                 <div className="flex flex-col gap-4">
                     <div className="flex flex-col">
                         <p className="paragraph-16 text-primary">Frontend Developer</p>
@@ -28,7 +30,7 @@ const Hero = () => {
                     </div>
                 </div>
             </div>
-            <div className="w-[600px] h-[600px] bg-grey-300 hidden lg:block"></div>
+            <Snake />
         </div>
     );
 };
