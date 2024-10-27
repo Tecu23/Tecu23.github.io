@@ -1,4 +1,5 @@
 import { useRef, useState, useEffect } from "react";
+import { calculateColor } from "../utils/helpers/snake";
 
 const Snake = () => {
     const [snake, setSnake] = useState<number[][]>([
@@ -25,10 +26,11 @@ const Snake = () => {
     const gameAreaWidth = 224 / 16; // 14 squares of width
     const gameAreaHeight = 416 / 16; // 26 squares of height
 
-    const SPEED = 200;
+    const SPEED = 150;
 
     useEffect(() => {
         const handleKeyDown = (e: KeyboardEvent) => {
+            e.preventDefault();
             switch (e.key) {
                 case "ArrowUp":
                     if (direction !== "down") setDirection("up");
@@ -142,54 +144,6 @@ const Snake = () => {
         setGameResult("");
     };
 
-    const calculateColor = (index: number, length: number): string => {
-        const startColor = [67, 217, 173, 0]; // RGB for #43D9AD
-        const endColor = [67, 217, 173, 1];
-
-        const ratio = index / (length - 1);
-        const r = Math.round(startColor[0] + ratio * (endColor[0] - startColor[0]));
-        const g = Math.round(startColor[1] + ratio * (endColor[1] - startColor[1]));
-        const b = Math.round(startColor[2] + ratio * (endColor[2] - startColor[2]));
-        const a = startColor[3] + ratio * (endColor[3] - startColor[3]);
-
-        const ratio2 = (index + 1) / (length - 1);
-        const r2 = Math.round(startColor[0] + ratio2 * (endColor[0] - startColor[0]));
-        const g2 = Math.round(startColor[1] + ratio2 * (endColor[1] - startColor[1]));
-        const b2 = Math.round(startColor[2] + ratio2 * (endColor[2] - startColor[2]));
-        const a2 = startColor[3] + ratio2 * (endColor[3] - startColor[3]);
-
-        const colorAtStart = index == 0 ? startColor : [r, g, b, a];
-        const colorAtEnd = index == length - 1 ? endColor : [r2, g2, b2, a2];
-
-        let angle = "";
-
-        const next = index == length - 1 ? snake[index] : snake[index + 1];
-        const prev = index == 0 ? snake[index] : snake[index - 1];
-
-        if (prev[0] == next[0]) {
-            angle = prev[1] < next[1] ? "180deg" : "0deg";
-        } else {
-            if (prev[1] == next[1]) {
-                angle = prev[0] > next[0] ? "270deg" : "90deg";
-            } else {
-                if (prev[0] > next[0]) {
-                    if (prev[1] > next[1]) {
-                        angle = "315deg";
-                    } else {
-                        angle = "225deg";
-                    }
-                } else {
-                    if (prev[1] < next[1]) {
-                        angle = "135deg";
-                    } else {
-                        angle = "45deg";
-                    }
-                }
-            }
-        }
-        return `linear-gradient(${angle}, rgba(${colorAtStart[0]}, ${colorAtStart[1]}, ${colorAtStart[2]}, ${colorAtStart[3]}), rgba(${colorAtEnd[0]}, ${colorAtEnd[1]}, ${colorAtEnd[2]}, ${colorAtEnd[3]}))`;
-    };
-
     return (
         <div className="w-[550px] h-[500px] hidden lg:flex gap-6 flex-shrink-0 flex-grow-0 flex-auto rounded-lg relative bg-bg-gradient-to-mb from-grey-700 to-primary-dark/25 border-2 border-grey-600 p-8">
             <div ref={gameAreaRef} className="h-full w-[240px] p-2 flex-auto flex-shrink-0 flex-grow-0 rounded-lg bg-grey-900 relative">
@@ -202,7 +156,7 @@ const Snake = () => {
                                 style={{
                                     left: `${segment[0] * 16 + 8}px`,
                                     top: `${segment[1] * 16 + 8}px`,
-                                    background: calculateColor(index, snake.length),
+                                    background: calculateColor(index, snake.length, snake),
                                     zIndex: snake.length - index,
                                 }}
                             ></div>
@@ -217,9 +171,9 @@ const Snake = () => {
                 {!isPlaying && gameResult === "" && (
                     <button
                         onClick={() => setIsPlaying(true)}
-                        className="z-30 absolute bottom-[50px] left-1/2 transform -translate-x-1/2 h-10 bg-primary-dark px-[14px] py-[10px] flex-center rounded-lg"
+                        className="z-30 absolute bottom-[50px] left-1/2 transform -translate-x-1/2 h-10 bg-primary-dark px-[14px] py-[10px] flex-center rounded-lg hover:bg-primary"
                     >
-                        <p className="paragraph-16 font-bold text-white">Start game</p>
+                        <p className="paragraph-16 font-bold text-white">Start Game</p>
                     </button>
                 )}
                 {!isPlaying && gameResult !== "" && (
@@ -228,7 +182,7 @@ const Snake = () => {
                             <h2 className="heading-4 text-primary-light ">{gameResult == "lost" ? "GAME OVER" : "WELL DONE"}</h2>
                         </div>
                         <button onClick={() => restart()} className="z-30 absolute bottom-14 w-full left-0 h-8 flex-center">
-                            <p className="paragraph-16 font-semibold text-white">start again</p>
+                            <p className="paragraph-16 font-semibold text-grey-100 hover:text-white">Start Again</p>
                         </button>
                     </>
                 )}
@@ -237,26 +191,26 @@ const Snake = () => {
                 <div className="rounded-lg relative p-4 bg-grey-900/15 flex flex-col gap-1">
                     <p className="paragraph-16 relative text-center text-white max-w-[170px] self-center">Use Keyboard Arrows to Play</p>
                     <div className="flex items-center justify-center w-full">
-                        <div className="w-[50px] h-[30px] flex-center bg-[#010C15] rounded-lg">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="7" height="10" viewBox="0 0 7 10" fill="none">
-                                <path d="M0.0390623 4.80914L6.03906 0.559128L6.03906 9.05916L0.0390623 4.80914Z" fill="white" />
+                        <div className="w-[50px] h-[30px] flex-center bg-grey-900 rounded-lg">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="9" height="7" viewBox="0 0 9 7" fill="none">
+                                <path d="M4.50002 0.309143L8.75003 6.30914H0.25L4.50002 0.309143Z" fill="white" />
                             </svg>
                         </div>
                     </div>
                     <div className="flex gap-1 justify-center items-center">
-                        <div className="w-[50px] h-[30px] flex-center bg-[#010C15] rounded-lg">
+                        <div className="w-[50px] h-[30px] flex-center bg-grey-900 rounded-lg">
                             <svg xmlns="http://www.w3.org/2000/svg" width="7" height="10" viewBox="0 0 7 10" fill="none">
                                 <path d="M0.0390623 4.80914L6.03906 0.559128L6.03906 9.05916L0.0390623 4.80914Z" fill="white" />
                             </svg>
                         </div>
-                        <div className="w-[50px] h-[30px] flex-center bg-[#010C15] rounded-lg">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="7" height="10" viewBox="0 0 7 10" fill="none">
-                                <path d="M0.0390623 4.80914L6.03906 0.559128L6.03906 9.05916L0.0390623 4.80914Z" fill="white" />
+                        <div className="w-[50px] h-[30px] flex-center bg-grey-900 rounded-lg">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="9" height="7" viewBox="0 0 9 7" fill="none">
+                                <path d="M4.49998 6.80914L0.24997 0.809142L8.75 0.809143L4.49998 6.80914Z" fill="white" />
                             </svg>
                         </div>
-                        <div className="w-[50px] h-[30px] flex-center bg-[#010C15] rounded-lg">
+                        <div className="w-[50px] h-[30px] flex-center bg-grey-900 rounded-lg">
                             <svg xmlns="http://www.w3.org/2000/svg" width="7" height="10" viewBox="0 0 7 10" fill="none">
-                                <path d="M0.0390623 4.80914L6.03906 0.559128L6.03906 9.05916L0.0390623 4.80914Z" fill="white" />
+                                <path d="M6.96094 4.80914L0.960938 9.05916L0.960938 0.559128L6.96094 4.80914Z" fill="white" />
                             </svg>
                         </div>
                     </div>
