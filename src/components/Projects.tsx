@@ -14,43 +14,53 @@ const Projects = () => {
                 {Array(3)
                     .fill(0)
                     .map((_, idx) => (
-                        <div key={idx} className="w-full flex items-center gap-16">
-                            {idx % 2 == 0 && (
-                                <div style={{ width: "calc(50% - 32px)" }} className="flex-shrink-0 flex-grow-0 flex-auto w-1/2 h-[350px] bg-grey-300 px-4 py-2 rounded">
-                                    <img src="/vite.svg" className="w-full h-full object-contain rounded-lg" />
-                                </div>
-                            )}
-                            <div className={`flex flex-col justify-center ${idx % 2 == 1 ? "items-end" : "items-start"} flex-shrink flex-grow flex-auto gap-8`}>
+                        <div key={idx} className="w-full flex flex-col lg:flex-row items-center gap-16">
+                            <div
+                                className={`${idx % 2 == 1 ? "block lg:hidden" : ""} w-full lg:w-[calc(50%-32px)] flex-shrink-0 flex-grow-0 flex-auto h-[350px] bg-grey-300 px-4 py-2 rounded`}
+                            >
+                                <img src="/vite.svg" className="w-full h-full object-contain rounded-lg" />
+                            </div>
+                            <div className={`flex flex-col justify-center ${idx % 2 == 1 ? "items-start lg:items-end" : "lg:items-start"} flex-shrink flex-grow flex-auto gap-8`}>
                                 <h3 className="heading-3 text-white">Project Title</h3>
                                 <p className="text-lg lg:paragraph-16 text-white">
                                     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
                                     veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
                                 </p>
                                 <button className="flex items-center gap-4 text-primary-dark hover:text-primary">
-                                    {idx % 2 == 1 && (
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="108" height="24" viewBox="0 0 108 24" fill="none" className="h-6 w-[68px]">
-                                            <path
-                                                d="M0.93934 10.9393C0.353553 11.5251 0.353553 12.4749 0.93934 13.0607L10.4853 22.6066C11.0711 23.1924 12.0208 23.1924 12.6066 22.6066C13.1924 22.0208 13.1924 21.0711 12.6066 20.4853L4.12132 12L12.6066 3.51472C13.1924 2.92893 13.1924 1.97919 12.6066 1.3934C12.0208 0.807612 11.0711 0.807612 10.4853 1.3934L0.93934 10.9393ZM2 13.5L108 13.5L108 10.5L2 10.5L2 13.5Z"
-                                                fill="currentColor"
-                                            />
-                                        </svg>
-                                    )}
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        width="108"
+                                        height="24"
+                                        viewBox="0 0 108 24"
+                                        fill="none"
+                                        className={`h-6 w-[68px] ${idx % 2 == 1 ? "lg:block" : ""} hidden`}
+                                    >
+                                        <path
+                                            d="M0.93934 10.9393C0.353553 11.5251 0.353553 12.4749 0.93934 13.0607L10.4853 22.6066C11.0711 23.1924 12.0208 23.1924 12.6066 22.6066C13.1924 22.0208 13.1924 21.0711 12.6066 20.4853L4.12132 12L12.6066 3.51472C13.1924 2.92893 13.1924 1.97919 12.6066 1.3934C12.0208 0.807612 11.0711 0.807612 10.4853 1.3934L0.93934 10.9393ZM2 13.5L108 13.5L108 10.5L2 10.5L2 13.5Z"
+                                            fill="currentColor"
+                                        />
+                                    </svg>
                                     <p className="heading-5">View Project</p>
-                                    {idx % 2 == 0 && (
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="108" height="24" viewBox="0 0 108 24" fill="none" className="h-6 w-[68px]">
-                                            <path
-                                                d="M107.061 13.0607C107.646 12.4749 107.646 11.5251 107.061 10.9393L97.5147 1.3934C96.9289 0.807611 95.9792 0.807611 95.3934 1.3934C94.8076 1.97918 94.8076 2.92893 95.3934 3.51472L103.879 12L95.3934 20.4853C94.8076 21.0711 94.8076 22.0208 95.3934 22.6066C95.9792 23.1924 96.9289 23.1924 97.5147 22.6066L107.061 13.0607ZM106 10.5L7.76053e-06 10.5L7.49826e-06 13.5L106 13.5L106 10.5Z"
-                                                fill="currentColor"
-                                            />
-                                        </svg>
-                                    )}
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        width="108"
+                                        height="24"
+                                        viewBox="0 0 108 24"
+                                        fill="none"
+                                        className={`h-6 w-[68px] ${idx % 2 == 1 ? "lg:hidden" : ""} `}
+                                    >
+                                        <path
+                                            d="M107.061 13.0607C107.646 12.4749 107.646 11.5251 107.061 10.9393L97.5147 1.3934C96.9289 0.807611 95.9792 0.807611 95.3934 1.3934C94.8076 1.97918 94.8076 2.92893 95.3934 3.51472L103.879 12L95.3934 20.4853C94.8076 21.0711 94.8076 22.0208 95.3934 22.6066C95.9792 23.1924 96.9289 23.1924 97.5147 22.6066L107.061 13.0607ZM106 10.5L7.76053e-06 10.5L7.49826e-06 13.5L106 13.5L106 10.5Z"
+                                            fill="currentColor"
+                                        />
+                                    </svg>
                                 </button>
                             </div>
-                            {idx % 2 == 1 && (
-                                <div style={{ width: "calc(50% - 32px)" }} className="flex-shrink-0 flex-grow-0 flex-auto h-[350px] bg-grey-300 px-4 py-2 rounded">
-                                    <img src="/vite.svg" className="w-full h-full object-contain rounded-lg" />
-                                </div>
-                            )}
+                            <div
+                                className={`${idx % 2 == 1 ? "lg:block" : ""} hidden w-full lg:w-[calc(50%-32px)] flex-shrink-0 flex-grow-0 flex-auto h-[350px] bg-grey-300 px-4 py-2 rounded`}
+                            >
+                                <img src="/vite.svg" className="w-full h-full object-contain rounded-lg" />
+                            </div>
                         </div>
                     ))}
             </div>
