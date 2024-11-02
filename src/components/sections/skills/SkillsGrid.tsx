@@ -91,18 +91,18 @@ const SkillsGrid = () => {
         <div className="border divide-y divide-grey-300 border-grey-300 w-full text-white">
             <div className="grid grid-cols-2 divide-x divide-grey-300">
                 <GridItem Icon={<BiLogoReact className="w-14 md:w-[80px] h-14 md:h-[80px] stroke-custom" />} href="#skills" />
-                <GridItem Icon={<BiLogoTypescript className="h-14 md:h-[80px] w-14 md:w-[80px]" />} href="#" />
+                <GridItem Icon={<BiLogoTypescript className="h-14 md:h-[80px] w-14 md:w-[80px]" />} href="#skills" />
             </div>
             <div className="grid grid-cols-4 divide-x divide-grey-300">
-                <GridItem Icon={<SiNextdotjs className="w-14 md:w-[80px] h-14 md:h-[80px]" />} href="#" />
-                <GridItem Icon={<BiLogoTailwindCss className="h-14 md:h-[80px] w-14 md:w-[80px]" />} href="#" />
-                <GridItem Icon={<TbBrandFramerMotion className="w-12 md:w-16 h-12 md:h-16" />} href="#" />
-                <GridItem Icon={<BiLogoRedux className="w-14 md:w-[80px] h-14 md:h-[80px]" />} href="#" />
+                <GridItem Icon={<SiNextdotjs className="w-14 md:w-[80px] h-14 md:h-[80px]" />} href="#skills" />
+                <GridItem Icon={<BiLogoTailwindCss className="h-14 md:h-[80px] w-14 md:w-[80px]" />} href="#skills" />
+                <GridItem Icon={<TbBrandFramerMotion className="w-12 md:w-16 h-12 md:h-16" />} href="#skills" />
+                <GridItem Icon={<BiLogoRedux className="w-14 md:w-[80px] h-14 md:h-[80px]" />} href="#skills" />
             </div>
             <div className="grid grid-cols-3 divide-x divide-grey-300">
-                <GridItem Icon={<BiLogoHtml5 className="w-14 md:w-[80px] h-14 md:h-[80px]" />} href="#" />
-                <GridItem Icon={<BiLogoCss3 className="w-14 md:w-[80px] h-14 md:h-[80px]" />} href="#" />
-                <GridItem Icon={<BiLogoJavascript className="w-14 md:w-[80px] h-14 md:h-[80px]" />} href="#" />
+                <GridItem Icon={<BiLogoHtml5 className="w-14 md:w-[80px] h-14 md:h-[80px]" />} href="#skills" />
+                <GridItem Icon={<BiLogoCss3 className="w-14 md:w-[80px] h-14 md:h-[80px]" />} href="#skills" />
+                <GridItem Icon={<BiLogoJavascript className="w-14 md:w-[80px] h-14 md:h-[80px]" />} href="#skills" />
             </div>
         </div>
     );

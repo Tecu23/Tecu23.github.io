@@ -22,12 +22,14 @@ const MobileNavbar = ({ active, setActive, items }: Props) => {
             const handleOpen = async () => {
                 main?.classList.add("overflow-hidden");
                 await animate("#background", { width: "100vw", height: "100vh", right: 0, top: 0 });
+                //@ts-expect-errors; this is not an error, but typescript sees it as one
                 animate("a", { opacity: 1, y: 0, filter: "blur(0px)", scale: 1 }, { delay: stagger(0.25), at: "-0.1" });
                 animate("h4", { opacity: 1, y: 0, filter: "blur(0px)" });
             };
             handleOpen();
         } else {
             const handleClose = async () => {
+                //@ts-expect-errors; this is not an error, but typescript sees it as one
                 await animate("a", { opacity: 0, y: -20, filter: "blur(10px)", scale: 0.5 }, { delay: stagger(0.25), at: "-0.1" });
                 await animate("h4", { opacity: 0, y: -20, filter: "blur(10px)" });
                 await animate("#background", { width: 48, height: 48, right: windowWidth < 640 ? 20 : 40, top: 8 });
