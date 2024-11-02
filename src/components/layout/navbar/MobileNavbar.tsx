@@ -1,5 +1,5 @@
 import { motion, MotionConfig, stagger, useAnimate } from "framer-motion";
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
 import { useWindowSize } from "../../../utils/hooks/useWindowSize";
 import { NavItem } from "../../../utils/types";
 
@@ -16,15 +16,26 @@ const MobileNavbar = ({ active, setActive, items }: Props) => {
 
     const [scrollTarget, setScrollTarget] = useState<string | null>(null);
 
+    const isFirstRender = useRef(true);
+
     useEffect(() => {
+        if (windowWidth == 0) {
+            return;
+        }
+        if (isFirstRender.current) {
+            isFirstRender.current = false;
+            return;
+        }
+
         const main = document.querySelector("#main");
+
         if (active) {
             const handleOpen = async () => {
                 main?.classList.add("overflow-hidden");
                 await animate("#background", { width: "100vw", height: "100vh", right: 0, top: 0 });
+                await animate("h4", { opacity: 1, y: 0, filter: "blur(0px)" });
                 //@ts-expect-errors; this is not an error, but typescript sees it as one
-                animate("a", { opacity: 1, y: 0, filter: "blur(0px)", scale: 1 }, { delay: stagger(0.25), at: "-0.1" });
-                animate("h4", { opacity: 1, y: 0, filter: "blur(0px)" });
+                await animate("a", { opacity: 1, y: 0, filter: "blur(0px)", scale: 1 }, { delay: stagger(0.25), at: "-0.1" });
             };
             handleOpen();
         } else {

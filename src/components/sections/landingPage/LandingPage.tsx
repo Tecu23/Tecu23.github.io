@@ -3,7 +3,7 @@ import Navbar from "../../layout/navbar/Navbar";
 
 const LandingPage = () => {
     return (
-        <section className="overflow-hidden relative z-10 min-h-screen">
+        <section className="overflow-hidden relative z-10 h-screen lg:h-auto">
             <div className="z-10 absolute left-0 bottom-6 opacity-25 w-[132px] h-[132px] rounded-full blur bg-gradient-to-r from-primary to-primary-dark flex-center transform -translate-x-[32px]">
                 <div className="bg-grey-900 rounded-full w-[100px] h-[100px]"></div>
             </div>
