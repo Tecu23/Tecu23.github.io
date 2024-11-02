@@ -26,8 +26,8 @@ const Navbar = () => {
         <div style={{ zIndex: 40 }} className="relative container mx-auto max-w-7xl h-[72px] flex justify-between items-center sm:px-10 px-5 z-30">
             <h4 className="heading-4 text-white z-10">Tecu23</h4>
             <MobileNavbar items={navigationItems} active={openNavigation} setActive={setOpenNavigation} />
-            <div className={`${openNavigation ? "flex" : "hidden"} fixed top-[4rem] left-0 right-0 bottom-0 lg:static lg:flex bg-grey-900 lg:bg-transparent`}>
-                <nav className="relative flex flex-col lg:flex-row items-center justify-center m-auto gap-6">
+            <div className={`hidden static lg:flex bg-grey-900 bg-transparent`}>
+                <nav className="relative flex flex-row items-center justify-center m-auto gap-6">
                     {navigationItems.map((item) => (
                         <a
                             onClick={() => handleSmoothScroll(item.key)}
