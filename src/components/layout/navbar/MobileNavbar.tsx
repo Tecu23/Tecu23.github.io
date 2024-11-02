@@ -1,11 +1,7 @@
 import { motion, MotionConfig, stagger, useAnimate } from "framer-motion";
-import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
-import { useWindowSize } from "../../utils/hooks/useWindowSize";
-
-type NavItem = {
-    key: string;
-    title: string;
-};
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { useWindowSize } from "../../../utils/hooks/useWindowSize";
+import { NavItem } from "../../../utils/types";
 
 type Props = {
     active: boolean;
@@ -13,7 +9,7 @@ type Props = {
     items: NavItem[];
 };
 
-const MenuButton = ({ active, setActive, items }: Props) => {
+const MobileNavbar = ({ active, setActive, items }: Props) => {
     const [scope, animate] = useAnimate();
 
     const [windowWidth, _] = useWindowSize();
@@ -141,7 +137,7 @@ const MenuButton = ({ active, setActive, items }: Props) => {
                     Tecu23
                 </motion.h4>
 
-                <motion.nav className="fixed left-8 top-20 z-40 h-full w-full overflow-hidden bg-transparent">
+                <motion.nav className="hidden lg:fixed left-8 top-20 z-40 h-full w-full overflow-hidden bg-transparent">
                     <motion.div id="nav-links" className="space-y-8 p-20 pl-4 md:pl-20">
                         {items.map((item) => (
                             <motion.a
@@ -163,4 +159,4 @@ const MenuButton = ({ active, setActive, items }: Props) => {
     );
 };
 
-export default MenuButton;
+export default MobileNavbar;

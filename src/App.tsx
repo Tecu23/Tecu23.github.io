@@ -1,9 +1,9 @@
-import About from "./components/About";
-import Contact from "./components/Contact";
-import Footer from "./components/Footer";
-import LandingPage from "./components/LandingPage";
-import Projects from "./components/Projects";
-import Skills from "./components/Skills";
+import About from "./components/sections/about/About";
+import Contact from "./components/sections/contact/Contact";
+import Footer from "./components/layout/footer/Footer";
+import LandingPage from "./components/sections/landingPage/LandingPage";
+import Projects from "./components/sections/projects/Projects";
+import Skills from "./components/sections/skills/Skills";
 
 function App() {
     return (

@@ -1,5 +1,5 @@
-import Hero from "./Hero";
-import Navbar from "./Navbar";
+import Hero from "./hero/Hero";
+import Navbar from "../../layout/navbar/Navbar";
 
 const LandingPage = () => {
     return (

@@ -16,6 +16,12 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.stroke-custom {
+    path {
+        stroke-width: 0.4px !important;
+    }
+}
+
 @layer utilities {
     .flex-center {
         @apply flex items-center justify-center

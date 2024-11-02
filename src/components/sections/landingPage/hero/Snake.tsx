@@ -1,5 +1,5 @@
 import { useRef, useState, useEffect } from "react";
-import { calculateColor } from "../utils/helpers/snake";
+import { calculateColor } from "../../../../utils/helpers/snake";
 
 const Snake = () => {
     const [snake, setSnake] = useState<number[][]>([
