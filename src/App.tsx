@@ -7,7 +7,7 @@ import Skills from "./components/Skills";
 
 function App() {
     return (
-        <main className="bg-grey-900 w-full min-h-screen">
+        <main id="main" className="bg-grey-900 w-full h-screen">
             <LandingPage />
             <About />
             <Skills />

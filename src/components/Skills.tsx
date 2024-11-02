@@ -1,6 +1,6 @@
 const Skills = () => {
     return (
-        <section id="skills" className="relative overflow-hidden">
+        <section id="skills" className="relative overflow-hidden bg-grey-900">
             <div className="z-10 absolute left-0 top-14 opacity-25 w-[250px] h-[250px] rounded-full blur-lg lg:blur bg-gradient-to-r from-primary to-primary-dark transform -translate-x-[50px]"></div>
             <div className="z-10 absolute right-[5%] top-0 opacity-25 w-[120px] h-[120px] rounded-full blur bg-gradient-to-r from-primary to-primary-dark flex-center transform -translate-y-[80px]">
                 <div className="z-10 bg-grey-900 rounded-full w-[90px] h-[90px] relative"></div>

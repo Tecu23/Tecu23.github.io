@@ -1,6 +1,6 @@
 const Contact = () => {
     return (
-        <section id="section" className="relative overflow-hidden">
+        <section id="contact" className="relative overflow-hidden bg-grey-900">
             <div className="z-10 absolute left-[5%] bottom-0 opacity-25 w-[120px] h-[120px] rounded-full blur bg-gradient-to-r from-primary to-primary-dark flex-center transform translate-y-[30px] -translate-x-[60px]">
                 <div className="z-10 bg-grey-900 rounded-full w-[90px] h-[90px] relative"></div>
             </div>
@@ -23,7 +23,7 @@ const Contact = () => {
                                 />
                             </svg>
                         </div>
-                        <p className="text-lg lg:paragraph-16 text-white">
+                        <p className="text-lg lg:paragraph-16 text-white text-center lg:text-left">
                             Feel free to get in touch, it will be a great pleasure to be able to help you with your project, contact me now!
                         </p>
                     </div>

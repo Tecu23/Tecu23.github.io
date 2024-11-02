@@ -149,18 +149,16 @@ const Snake = () => {
             <div ref={gameAreaRef} className="h-full w-[240px] p-2 flex-auto flex-shrink-0 flex-grow-0 rounded-lg bg-grey-900 relative">
                 <div className="absolute inset-0">
                     {snake.map((segment, index) => (
-                        <>
-                            <div
-                                key={index}
-                                className={`w-4 h-4 absolute ${index == snake.length - 1 ? (direction == "up" ? "rounded-t-md" : direction == "right" ? "rounded-r-md" : direction == "left" ? "rounded-l-md" : "rounded-b-md") : ""}`}
-                                style={{
-                                    left: `${segment[0] * 16 + 8}px`,
-                                    top: `${segment[1] * 16 + 8}px`,
-                                    background: calculateColor(index, snake.length, snake),
-                                    zIndex: snake.length - index,
-                                }}
-                            ></div>
-                        </>
+                        <div
+                            key={index}
+                            className={`w-4 h-4 absolute ${index == snake.length - 1 ? (direction == "up" ? "rounded-t-md" : direction == "right" ? "rounded-r-md" : direction == "left" ? "rounded-l-md" : "rounded-b-md") : ""}`}
+                            style={{
+                                left: `${segment[0] * 16 + 8}px`,
+                                top: `${segment[1] * 16 + 8}px`,
+                                background: calculateColor(index, snake.length, snake),
+                                zIndex: snake.length - index,
+                            }}
+                        ></div>
                     ))}
                 </div>
 
