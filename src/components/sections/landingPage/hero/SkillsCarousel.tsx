@@ -1,44 +1,55 @@
+import React from "react";
+
 import { BiLogoTypescript, BiLogoJavascript, BiLogoGoLang, BiTerminal, BiLogoHtml5, BiLogoCss3, BiLogoTailwindCss, BiLogoReact, BiLogoRedux } from "react-icons/bi";
 import { SiNextdotjs } from "react-icons/si";
 import { TbBrandFramerMotion } from "react-icons/tb";
+
 import { motion } from "framer-motion";
+
 const SkillsCarousel = () => {
     const slides = [
-        { icon: <BiLogoHtml5 /> },
-        { icon: <BiLogoJavascript /> },
-        { icon: <BiLogoReact /> },
-        { icon: <BiLogoRedux /> },
-        { icon: <BiLogoGoLang /> },
-        { icon: <BiLogoTailwindCss /> },
-        { icon: <BiLogoCss3 /> },
-        { icon: <SiNextdotjs /> },
-        { icon: <BiTerminal /> },
-        { icon: <BiLogoTypescript /> },
-        { icon: <TbBrandFramerMotion /> },
+        { icon: <BiLogoHtml5 className="h-12 w-12 text-grey-200" /> },
+        { icon: <BiLogoJavascript className="h-12 w-12 text-grey-200" /> },
+        { icon: <BiLogoReact className="h-12 w-12 text-grey-200" /> },
+        { icon: <BiLogoRedux className="h-12 w-12 text-grey-200" /> },
+        { icon: <BiLogoGoLang className="h-12 w-12 text-grey-200" /> },
+        { icon: <BiLogoTailwindCss className="h-12 w-12 text-grey-200" /> },
+        { icon: <BiLogoCss3 className="h-12 w-12 text-grey-200" /> },
+        { icon: <SiNextdotjs className="h-12 w-12 text-grey-200" /> },
+        { icon: <BiTerminal className="h-12 w-12 text-grey-200" /> },
+        { icon: <BiLogoTypescript className="h-12 w-12 text-grey-200" /> },
+        { icon: <TbBrandFramerMotion className="h-12 w-12 text-grey-200" /> },
     ];
 
-    const duplicatedSlides = [...slides, ...slides, ...slides];
+    const duplicatedSlides = [...slides];
 
     return (
-        <div className="lg:hidden relative h-[200px] w-full overflow-hidden">
-            <h2 className="text-start p-4 heading-5 text-grey-300 ">Tools behind the magic:</h2>
-            <motion.div
-                className="flex"
-                animate={{
-                    x: ["-100%", "0%"],
-                }}
-                transition={{
-                    ease: "linear",
-                    duration: 10,
-                    repeat: Infinity,
-                }}
-            >
-                {duplicatedSlides.map((slide, idx) => (
-                    <div key={idx} className="flex-shrink-0" style={{ width: 80 }}>
-                        <div className="flex flex-col gap-4 items-center justify-center h-full text-6xl text-grey-100">{slide.icon}</div>
-                    </div>
-                ))}
-            </motion.div>
+        <div className="lg:hidden relative h-[150px] w-full">
+            <h2 className="text-center paragraph-16 text-grey-300 ">Tools behind the magic:</h2>
+            <div className="flex relative overflow-visible">
+                <motion.div
+                    initial={{ x: 0 }}
+                    animate={{
+                        x: ["-50%", "0%"],
+                    }}
+                    transition={{
+                        ease: "linear",
+                        duration: 10,
+                        repeat: Infinity,
+                    }}
+                    className="flex flex-none gap-16 pr-16"
+                >
+                    {[...new Array(2)].fill(0).map((_, idx) => (
+                        <React.Fragment key={idx}>
+                            {duplicatedSlides.map((slide, idx) => (
+                                <div key={idx} className="h-12 w-auto flex-none">
+                                    {slide.icon}
+                                </div>
+                            ))}
+                        </React.Fragment>
+                    ))}
+                </motion.div>
+            </div>
         </div>
     );
 };
