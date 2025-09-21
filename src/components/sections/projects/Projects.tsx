@@ -1,5 +1,3 @@
-import clsx from "clsx";
-
 import Reveal from "../../shared/Reveal";
 import Tooltip from "../../shared/Tooltip";
 

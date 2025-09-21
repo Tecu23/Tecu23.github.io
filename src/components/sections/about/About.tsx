@@ -1,4 +1,4 @@
-import { FaLinkedin, FaGithub } from "react-icons/fa";
+import { FaGithub } from "react-icons/fa";
 import { IoIosMail } from "react-icons/io";
 import Reveal from "../../shared/Reveal";
 
@@ -22,10 +22,25 @@ const About = () => {
                             Full Stack Developer
                         </p>
                     </div>
-                    <div className="flex-center gap-4 text-primary">
-                        <FaGithub className="w-8 h-8" />
+                    <div className="flex-center gap-2 text-primary">
+                        <button
+                            onClick={() =>
+                                window.open(
+                                    "https://github.com/Tecu23",
+                                    "_blank",
+                                )
+                            }
+                        >
+                            <FaGithub className="w-8 h-8" />
+                        </button>
+                        <button
+                            onClick={() =>
+                                (window.location.href =
+                                    "mailto:andrei.teculescu@gmail.com")
+                            }
+                        ></button>
                         <IoIosMail className="w-10 h-10" />
-                        <FaLinkedin className="w-8 h-8" />
+                        {/* <FaLinkedin className="w-8 h-8" /> */}
                     </div>
                 </div>
                 <div className="flex flex-col gap-6 justify-center items-start">

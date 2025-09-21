@@ -1,4 +1,4 @@
-import { FaLinkedin, FaGithub } from "react-icons/fa";
+import { FaGithub } from "react-icons/fa";
 import { IoIosMail } from "react-icons/io";
 import Reveal from "../../shared/Reveal";
 
