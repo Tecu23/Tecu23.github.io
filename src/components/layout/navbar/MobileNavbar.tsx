@@ -1,10 +1,4 @@
-import {
-    motion,
-    MotionConfig,
-    stagger,
-    useAnimate,
-    AnimatePresence,
-} from "framer-motion";
+import { motion, MotionConfig, stagger, useAnimate } from "framer-motion";
 import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
 import { useWindowSize } from "../../../utils/hooks/useWindowSize";
 import { NavItem } from "../../../utils/types";
@@ -21,7 +15,6 @@ const MobileNavbar = ({ active, setActive, items }: Props) => {
     const [windowWidth] = useWindowSize();
 
     const [scrollTarget, setScrollTarget] = useState<string | null>(null);
-    const [isAnimating, setIsAnimating] = useState(false);
 
     const isFirstRender = useRef(true);
 
@@ -37,8 +30,17 @@ const MobileNavbar = ({ active, setActive, items }: Props) => {
         const main = document.querySelector("#main");
 
         if (active) {
-            setIsAnimating(true);
             const handleOpen = async () => {
+                // Make elements interactive
+                await animate(
+                    "#nav-container",
+                    {
+                        pointerEvents: "auto",
+                        zIndex: 10,
+                    },
+                    { duration: 0 },
+                );
+
                 main?.classList.add("overflow-hidden");
                 await animate("#background", {
                     width: "100vw",
@@ -53,11 +55,9 @@ const MobileNavbar = ({ active, setActive, items }: Props) => {
                     { opacity: 1, y: 0, filter: "blur(0px)", scale: 1 },
                     { delay: stagger(0.25), at: "-0.1" },
                 );
-                setIsAnimating(false);
             };
             handleOpen();
         } else {
-            setIsAnimating(true);
             const handleClose = async () => {
                 await animate(
                     "a",
@@ -76,6 +76,17 @@ const MobileNavbar = ({ active, setActive, items }: Props) => {
                     right: windowWidth < 640 ? 20 : 40,
                     top: 8,
                 });
+
+                // Make elements non-interactive after animations complete
+                await animate(
+                    "#nav-container",
+                    {
+                        pointerEvents: "none",
+                        zIndex: -10,
+                    },
+                    { duration: 0 },
+                );
+
                 main?.classList.remove("overflow-hidden");
 
                 if (scrollTarget) {
@@ -91,7 +102,6 @@ const MobileNavbar = ({ active, setActive, items }: Props) => {
 
                     setScrollTarget(null);
                 }
-                setIsAnimating(false);
             };
             handleClose();
         }
@@ -106,8 +116,6 @@ const MobileNavbar = ({ active, setActive, items }: Props) => {
         setActive(false);
     };
 
-    const shouldShowElements = active || isAnimating;
-
     return (
         <MotionConfig
             transition={{
@@ -116,27 +124,61 @@ const MobileNavbar = ({ active, setActive, items }: Props) => {
             }}
         >
             <motion.div ref={scope} className="">
-                <AnimatePresence>
-                    {shouldShowElements ? (
+                {/* Container for managing pointer events and z-index */}
+                <motion.div
+                    id="nav-container"
+                    initial={{
+                        pointerEvents: "none",
+                        zIndex: -10,
+                    }}
+                    className="absolute inset-0"
+                >
+                    <motion.div
+                        style={{
+                            width: 48,
+                            height: 48,
+                            right: windowWidth < 640 ? 20 : 40,
+                            top: 8,
+                        }}
+                        id="background"
+                        initial={false}
+                        className="lg:hidden absolute bg-grey-900 rounded-lg"
+                    ></motion.div>
+
+                    <motion.h4
+                        style={{ opacity: 0 }}
+                        className="absolute top-4 left-10 heading-4 text-white"
+                    >
+                        Tecu23
+                    </motion.h4>
+
+                    <motion.nav className="fixed lg:hidden left-8 top-20 h-full w-full overflow-hidden bg-transparent">
                         <motion.div
-                            style={{
-                                width: 48,
-                                height: 48,
-                                right: windowWidth < 640 ? 20 : 40,
-                                top: 8,
-                            }}
-                            id="background"
-                            initial={{ width: 48, height: 48 }}
-                            exit={{
-                                width: 48,
-                                height: 48,
-                                right: windowWidth < 640 ? 20 : 40,
-                                top: 8,
-                            }}
-                            className="lg:hidden absolute bg-grey-900 rounded-lg z-10"
-                        ></motion.div>
-                    ) : null}
-                </AnimatePresence>
+                            id="nav-links"
+                            className="space-y-8 p-20 pl-4 md:pl-20"
+                        >
+                            {items.map((item) => (
+                                <motion.a
+                                    key={item.key}
+                                    onClick={(e) => {
+                                        handleScroll(e, item.key);
+                                    }}
+                                    style={{
+                                        opacity: 0,
+                                        transform: "translateY(-20px)",
+                                    }}
+                                    href={`#${item.key}`}
+                                    className="block text-primary transition-colors hover:text-violet-50 md:text-7xl"
+                                >
+                                    <p className="heading-3 lg:paragraph-16 font-bold">
+                                        {item.title}
+                                    </p>
+                                </motion.a>
+                            ))}
+                        </motion.div>
+                    </motion.nav>
+                </motion.div>
+
                 <motion.button
                     initial={false}
                     onClick={() => setActive((prev) => !prev)}
@@ -199,48 +241,6 @@ const MobileNavbar = ({ active, setActive, items }: Props) => {
                         className="absolute h-[3px] w-6 bg-white"
                     />
                 </motion.button>
-                <AnimatePresence>
-                    {shouldShowElements && (
-                        <motion.h4
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            exit={{ opacity: 0 }}
-                            className="absolute top-4 left-10 heading-4 text-white z-10"
-                        >
-                            Tecu23
-                        </motion.h4>
-                    )}
-                </AnimatePresence>
-
-                <AnimatePresence>
-                    {shouldShowElements && (
-                        <motion.nav className="fixed lg:hidden left-8 top-20 z-40 h-full w-full overflow-hidden bg-transparent">
-                            <motion.div
-                                id="nav-links"
-                                className="space-y-8 p-20 pl-4 md:pl-20"
-                            >
-                                {items.map((item) => (
-                                    <motion.a
-                                        key={item.key}
-                                        onClick={(e) => {
-                                            handleScroll(e, item.key);
-                                        }}
-                                        style={{
-                                            opacity: 0,
-                                            transform: "translateY(-20px)",
-                                        }}
-                                        href={`#${item.key}`}
-                                        className="block text-primary transition-colors hover:text-violet-50 md:text-7xl"
-                                    >
-                                        <p className="heading-3 lg:paragraph-16 font-bold">
-                                            {item.title}
-                                        </p>
-                                    </motion.a>
-                                ))}
-                            </motion.div>
-                        </motion.nav>
-                    )}
-                </AnimatePresence>
             </motion.div>
         </MotionConfig>
     );
