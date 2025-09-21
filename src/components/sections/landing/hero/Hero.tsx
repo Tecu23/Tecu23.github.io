@@ -6,6 +6,17 @@ import Snake from "./Snake";
 const Hero = () => {
     const [windowWidth] = useWindowSize();
 
+    const handleSmoothScroll = (id: string) => {
+        const target = document.getElementById(id);
+
+        if (target) {
+            target.scrollIntoView({
+                behavior: "smooth",
+                block: "start",
+            });
+        }
+    };
+
     return (
         <div className="z-20 relative container mx-auto max-w-7xl common-padding flex flex-col lg:flex-row justify-around items-start h-full gap-6">
             <div className="w-full flex flex-col items-center lg:items-start justify-start flex-grow flex-shrink flex-auto">
@@ -49,7 +60,12 @@ const Hero = () => {
                                     windowWidth < 1024 ? "100%" : "fit-content"
                                 }
                             >
-                                <button className="w-full lg:w-auto h-12 px-5 bg-primary-dark hover:bg-primary rounded-md">
+                                <button
+                                    onClick={() =>
+                                        handleSmoothScroll("projects")
+                                    }
+                                    className="w-full lg:w-auto h-12 px-5 bg-primary-dark hover:bg-primary rounded-md"
+                                >
                                     <p className="text-lg lg:text-[14px] font-semibold tracking-wide text-white">
                                         View My Projects
                                     </p>
@@ -60,7 +76,12 @@ const Hero = () => {
                                     windowWidth < 1024 ? "100%" : "fit-content"
                                 }
                             >
-                                <button className="w-full lg:w-auto h-12 px-5 border-primary hover:border-primary-dark rounded-md border">
+                                <button
+                                    onClick={() =>
+                                        handleSmoothScroll("contact")
+                                    }
+                                    className="w-full lg:w-auto h-12 px-5 border-primary hover:border-primary-dark rounded-md border"
+                                >
                                     <p className="text-lg lg:text-[14px] font-semibold tracking-wide text-primary hover:text-primary-dark">
                                         Contact Me
                                     </p>

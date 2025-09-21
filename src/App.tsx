@@ -1,7 +1,7 @@
 import About from "./components/sections/about/About";
 import Contact from "./components/sections/contact/Contact";
 import Footer from "./components/layout/footer/Footer";
-import LandingPage from "./components/sections/landingPage/LandingPage";
+import LandingPage from "./components/sections/landing/LandingPage";
 import Projects from "./components/sections/projects/Projects";
 import Skills from "./components/sections/skills/Skills";
 
