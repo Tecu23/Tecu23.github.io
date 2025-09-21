@@ -1,4 +1,10 @@
-import { motion, MotionConfig, stagger, useAnimate } from "framer-motion";
+import {
+    motion,
+    MotionConfig,
+    stagger,
+    useAnimate,
+    AnimatePresence,
+} from "framer-motion";
 import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
 import { useWindowSize } from "../../../utils/hooks/useWindowSize";
 import { NavItem } from "../../../utils/types";
@@ -12,9 +18,10 @@ type Props = {
 const MobileNavbar = ({ active, setActive, items }: Props) => {
     const [scope, animate] = useAnimate();
 
-    const [windowWidth, _] = useWindowSize();
+    const [windowWidth] = useWindowSize();
 
     const [scrollTarget, setScrollTarget] = useState<string | null>(null);
+    const [isAnimating, setIsAnimating] = useState(false);
 
     const isFirstRender = useRef(true);
 
@@ -30,20 +37,45 @@ const MobileNavbar = ({ active, setActive, items }: Props) => {
         const main = document.querySelector("#main");
 
         if (active) {
+            setIsAnimating(true);
             const handleOpen = async () => {
                 main?.classList.add("overflow-hidden");
-                await animate("#background", { width: "100vw", height: "100vh", right: 0, top: 0 });
+                await animate("#background", {
+                    width: "100vw",
+                    height: "100vh",
+                    right: 0,
+                    top: 0,
+                });
                 await animate("h4", { opacity: 1, y: 0, filter: "blur(0px)" });
-                //@ts-expect-errors; this is not an error, but typescript sees it as one
-                await animate("a", { opacity: 1, y: 0, filter: "blur(0px)", scale: 1 }, { delay: stagger(0.25), at: "-0.1" });
+                await animate(
+                    "a",
+                    //@ts-expect-errors; this is not an error, but typescript sees it as one
+                    { opacity: 1, y: 0, filter: "blur(0px)", scale: 1 },
+                    { delay: stagger(0.25), at: "-0.1" },
+                );
+                setIsAnimating(false);
             };
             handleOpen();
         } else {
+            setIsAnimating(true);
             const handleClose = async () => {
-                //@ts-expect-errors; this is not an error, but typescript sees it as one
-                await animate("a", { opacity: 0, y: -20, filter: "blur(10px)", scale: 0.5 }, { delay: stagger(0.25), at: "-0.1" });
-                await animate("h4", { opacity: 0, y: -20, filter: "blur(10px)" });
-                await animate("#background", { width: 48, height: 48, right: windowWidth < 640 ? 20 : 40, top: 8 });
+                await animate(
+                    "a",
+                    //@ts-expect-errors; this is not an error, but typescript sees it as one
+                    { opacity: 0, y: -20, filter: "blur(10px)", scale: 0.5 },
+                    { delay: stagger(0.25), at: "-0.1" },
+                );
+                await animate("h4", {
+                    opacity: 0,
+                    y: -20,
+                    filter: "blur(10px)",
+                });
+                await animate("#background", {
+                    width: 48,
+                    height: 48,
+                    right: windowWidth < 640 ? 20 : 40,
+                    top: 8,
+                });
                 main?.classList.remove("overflow-hidden");
 
                 if (scrollTarget) {
@@ -59,16 +91,22 @@ const MobileNavbar = ({ active, setActive, items }: Props) => {
 
                     setScrollTarget(null);
                 }
+                setIsAnimating(false);
             };
             handleClose();
         }
     }, [active, animate, scrollTarget, windowWidth]);
 
-    const handleScroll = (e: React.MouseEvent<HTMLAnchorElement>, sectionId: string) => {
+    const handleScroll = (
+        e: React.MouseEvent<HTMLAnchorElement>,
+        sectionId: string,
+    ) => {
         e.preventDefault();
         setScrollTarget(sectionId);
         setActive(false);
     };
+
+    const shouldShowElements = active || isAnimating;
 
     return (
         <MotionConfig
@@ -78,12 +116,27 @@ const MobileNavbar = ({ active, setActive, items }: Props) => {
             }}
         >
             <motion.div ref={scope} className="">
-                <motion.div
-                    style={{ width: 48, height: 48, right: windowWidth < 640 ? 20 : 40, top: 8 }}
-                    id="background"
-                    initial={false}
-                    className="lg:hidden absolute bg-grey-900 rounded-lg z-10"
-                ></motion.div>
+                <AnimatePresence>
+                    {shouldShowElements ? (
+                        <motion.div
+                            style={{
+                                width: 48,
+                                height: 48,
+                                right: windowWidth < 640 ? 20 : 40,
+                                top: 8,
+                            }}
+                            id="background"
+                            initial={{ width: 48, height: 48 }}
+                            exit={{
+                                width: 48,
+                                height: 48,
+                                right: windowWidth < 640 ? 20 : 40,
+                                top: 8,
+                            }}
+                            className="lg:hidden absolute bg-grey-900 rounded-lg z-10"
+                        ></motion.div>
+                    ) : null}
+                </AnimatePresence>
                 <motion.button
                     initial={false}
                     onClick={() => setActive((prev) => !prev)}
@@ -146,27 +199,48 @@ const MobileNavbar = ({ active, setActive, items }: Props) => {
                         className="absolute h-[3px] w-6 bg-white"
                     />
                 </motion.button>
-                <motion.h4 style={{ opacity: 0 }} className="absolute top-4 left-10 heading-4 text-white z-10">
-                    Tecu23
-                </motion.h4>
+                <AnimatePresence>
+                    {shouldShowElements && (
+                        <motion.h4
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
+                            className="absolute top-4 left-10 heading-4 text-white z-10"
+                        >
+                            Tecu23
+                        </motion.h4>
+                    )}
+                </AnimatePresence>
 
-                <motion.nav className="fixed lg:hidden left-8 top-20 z-40 h-full w-full overflow-hidden bg-transparent">
-                    <motion.div id="nav-links" className="space-y-8 p-20 pl-4 md:pl-20">
-                        {items.map((item) => (
-                            <motion.a
-                                key={item.key}
-                                onClick={(e) => {
-                                    handleScroll(e, item.key);
-                                }}
-                                style={{ opacity: 0, transform: "translateY(-20px)" }}
-                                href={`#${item.key}`}
-                                className="block text-primary transition-colors hover:text-violet-50 md:text-7xl"
+                <AnimatePresence>
+                    {shouldShowElements && (
+                        <motion.nav className="fixed lg:hidden left-8 top-20 z-40 h-full w-full overflow-hidden bg-transparent">
+                            <motion.div
+                                id="nav-links"
+                                className="space-y-8 p-20 pl-4 md:pl-20"
                             >
-                                <p className="heading-3 lg:paragraph-16 font-bold">{item.title}</p>
-                            </motion.a>
-                        ))}
-                    </motion.div>
-                </motion.nav>
+                                {items.map((item) => (
+                                    <motion.a
+                                        key={item.key}
+                                        onClick={(e) => {
+                                            handleScroll(e, item.key);
+                                        }}
+                                        style={{
+                                            opacity: 0,
+                                            transform: "translateY(-20px)",
+                                        }}
+                                        href={`#${item.key}`}
+                                        className="block text-primary transition-colors hover:text-violet-50 md:text-7xl"
+                                    >
+                                        <p className="heading-3 lg:paragraph-16 font-bold">
+                                            {item.title}
+                                        </p>
+                                    </motion.a>
+                                ))}
+                            </motion.div>
+                        </motion.nav>
+                    )}
+                </AnimatePresence>
             </motion.div>
         </MotionConfig>
     );

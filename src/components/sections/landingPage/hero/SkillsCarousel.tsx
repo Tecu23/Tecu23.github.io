@@ -1,6 +1,16 @@
 import React from "react";
 
-import { BiLogoTypescript, BiLogoJavascript, BiLogoGoLang, BiTerminal, BiLogoHtml5, BiLogoCss3, BiLogoTailwindCss, BiLogoReact, BiLogoRedux } from "react-icons/bi";
+import {
+    BiLogoCss3,
+    BiLogoGoLang,
+    BiLogoHtml5,
+    BiLogoJavascript,
+    BiLogoReact,
+    BiLogoRedux,
+    BiLogoTailwindCss,
+    BiLogoTypescript,
+    BiTerminal,
+} from "react-icons/bi";
 import { SiNextdotjs } from "react-icons/si";
 import { TbBrandFramerMotion } from "react-icons/tb";
 
@@ -25,7 +35,9 @@ const SkillsCarousel = () => {
 
     return (
         <div className="lg:hidden relative h-[150px] w-full">
-            <h2 className="text-center paragraph-16 text-grey-300 ">Tools behind the magic:</h2>
+            <h2 className="text-center paragraph-16 text-grey-300 ">
+                Tools behind the magic:
+            </h2>
             <div className="flex relative overflow-visible">
                 <motion.div
                     initial={{ x: 0 }}
@@ -42,7 +54,10 @@ const SkillsCarousel = () => {
                     {[...new Array(2)].fill(0).map((_, idx) => (
                         <React.Fragment key={idx}>
                             {duplicatedSlides.map((slide, idx) => (
-                                <div key={idx} className="h-12 w-auto flex-none">
+                                <div
+                                    key={idx}
+                                    className="h-12 w-auto flex-none"
+                                >
                                     {slide.icon}
                                 </div>
                             ))}
